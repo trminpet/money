@@ -1,37 +1,35 @@
 import React, { Component } from 'react';
 import Row from "./row.js";
+import {generateTransaction} from "./transaction.js"
 
 class Rows extends Component {
 
 constructor(props) {
   super(props);
-  // Don't call this.setState() here!
-  this.state = { transactions:[
-   {
-    name:"Transaction 1",
-    code:"trans1",
-    price:"100"
-   }
-  ] };
+  this.state = { transactions: [] };
 }
 
-componentDidMount(){
-setInterval(function(){  
+  componentDidMount() {
+    this.intervalID = setInterval(
+      () => this._generateTransaction(),
+      1000
+    );
+  }
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+  }
 
-let transactions = this.state.transactions;
+_generateTransaction(){
+  let transactions = this.state.transactions;
+  transactions.unshift(generateTransaction());
 
-transactions.push({
-   name:"Transaction 1",
-    code:"trans1",
-    price:"100"
-})
-this.setState({
-  transactions:transactions
-})
-  
-    }, 15000);
+  this.setState({
+    transactions
+  });
 
 }
+
+
 
   render() {
     return (
