@@ -14,7 +14,7 @@
 //      - * surname
 //      - * bankAccount
 
-const getUserTo = ()=>{
+export const getUserTo = ()=>{
 	return {
 		name:"Johny",
 		surname:"English",
@@ -42,7 +42,7 @@ export const generateTransaction = ()=>{
 
 	let trans = "transaction" + Math.floor((Math.random() * 1500) + 1)
 	let transaction = {
-		name:trans,
+		name:'#' + Math.random().toString(16).slice(2, 16).toUpperCase(),
 		code:"CODE:"+trans.toUpperCase(),
 		price: Math.floor((Math.random() * 150000) + 1),
 		to:getUserTo(),

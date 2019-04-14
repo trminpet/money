@@ -1,41 +1,27 @@
 import React, { Component } from 'react';
 import Row from "./row.js";
-import {generateTransaction} from "./transaction.js"
+import "./rows.css";
+
+import {TransactionContext} from "./transactionContext.js";
 
 class Rows extends Component {
 
 constructor(props) {
   super(props);
-  this.state = { transactions: [] };
 }
-
-  componentDidMount() {
-    this.intervalID = setInterval(
-      () => this._generateTransaction(),
-      1000
-    );
-  }
-  componentWillUnmount() {
-    clearInterval(this.intervalID);
-  }
-
-_generateTransaction(){
-  let transactions = this.state.transactions;
-  transactions.unshift(generateTransaction());
-
-  this.setState({
-    transactions
-  });
-
-}
-
 
 
   render() {
     return (
-      <div className="container-fluid">
-        {this.state.transactions.map(el=><Row transaction={el}/>)}
+      <TransactionContext.Consumer>
+      {({transactions})=>(
+         <div className="container-fluid box-rows">
+        {transactions.map(transaction=><Row transaction={transaction}/>)}
       </div>
+        )}
+      
+      </TransactionContext.Consumer>
+    
     );
   }
 }
